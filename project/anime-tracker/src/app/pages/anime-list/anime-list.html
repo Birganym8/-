@@ -1,0 +1,32 @@
+<div class="main-container">
+  <div class="anime-grid">
+    @for (anime of animeList; track anime.id) {
+      @if (anime.title.toLowerCase().includes(search.toLowerCase())) {
+        
+        <div class="anime-card" [routerLink]="['/anime', anime.id]">
+          <div class="card-image-wrap">
+            <img [src]="anime.image_url || 'https://via.placeholder.com/300x450'" class="main-poster">
+            
+            <div class="info-overlay">
+              <div class="overlay-content">
+                <div class="meta-row">
+                  <span class="rating">★ {{ anime.rating || 'N/A' }}</span>
+                  <span class="stats">{{ anime.episodes }} серий</span>
+                </div>
+                <p class="description">{{ anime.description }}</p>
+                
+                <div class="action-icons">
+                  <button class="icon-btn" (click)="$event.stopPropagation(); addToList(anime.id)">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/like.png">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-title-external">{{ anime.title }}</div>
+        </div>
+      }
+    }
+  </div>
+</div>

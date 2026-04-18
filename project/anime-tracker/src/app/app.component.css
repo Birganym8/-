@@ -1,0 +1,230 @@
+* {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000; 
+}
+
+/* Шапка */
+.navbar {
+  background-color: #272727;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 40px; 
+  height: 70px;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-right: 40px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: 1; /* важно: растягивает блок на всю оставшуюся ширину */
+}
+
+.nav-links a, .nav-item {
+  color: #bbbbbb;
+  text-decoration: none;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-links a:hover, .nav-item:hover {
+  background-color: #151515;
+  color: #ffffff;
+}
+
+/*Категории*/
+.dropdown-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 700px;
+  background-color: #151515;
+  padding: 30px;
+  z-index: 2100;
+  border: 1px solid #272727;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.dropdown-header {
+  color: #bbbbbb;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.genres-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.genre-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.genre-item {
+  color: #bbbbbb;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+  border-radius: 4px;
+}
+
+.genre-item:hover {
+  background-color: #272727;
+  color: #ffffff;
+}
+
+.section-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.main-popular {
+  font-size: 32px;
+  border-left: 4px solid #e2062c;
+  padding-left: 15px;
+}
+
+.main-header {
+  width: 100%;
+  height: 450px;
+  background-image: url('https://i.pinimg.com/736x/65/49/ca/6549ca044862173f8b12a51d9fb6e57a.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+.profile-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px !important; 
+  min-width: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  text-decoration: none;
+  margin-left: auto; /* вот это двигает иконку вправо */
+  padding: 0 !important; 
+}
+
+.profile-icon-btn:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* Иконка яблока */
+.logo-icon {
+  cursor: pointer;
+  position: relative;
+  z-index: 3001; /* Чуть выше, чем обертка */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-icon:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Окно с видео */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95); /* Глубокий черный фон */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999 !important; /* Прямо в космос, поверх всего */
+}
+
+/* Контейнер видео */
+.video-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 0 50px rgba(226, 6, 44, 0.6); /* Красный ореол Applevein */
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.search-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px !important;
+  min-width: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0 !important;
+  margin-left: 30%;
+}
+
+.search-icon-btn:hover {
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+}
