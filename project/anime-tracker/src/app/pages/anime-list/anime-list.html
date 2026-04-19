@@ -3,7 +3,7 @@
     @for (anime of animeList; track anime.id) {
       @if (anime.title.toLowerCase().includes(search.toLowerCase())) {
         
-        <div class="anime-card" [routerLink]="['/anime', anime.id]">
+        <div class="anime-card" (click)="navigateToAnime(anime.id)">
           <div class="card-image-wrap">
             <img [src]="anime.image_url || 'https://via.placeholder.com/300x450'" class="main-poster">
             
@@ -16,8 +16,8 @@
                 <p class="description">{{ anime.description }}</p>
                 
                 <div class="action-icons">
-                  <button class="icon-btn" (click)="$event.stopPropagation(); addToList(anime.id)">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/like.png">
+                  <button class="icon-btn" (click)="$event.stopPropagation(); openStatusModal(anime)">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/bookmark-ribbon.png">
                   </button>
                 </div>
               </div>
@@ -30,3 +30,37 @@
     }
   </div>
 </div>
+
+@if (selectedAnime) {
+  <div class="status-overlay" (click)="closeModal($event)">
+    <div class="status-modal">
+      <div class="modal-anime-info">
+        <img [src]="selectedAnime.image_url" class="modal-poster">
+        <div>
+          <p class="modal-title">{{ selectedAnime.title }}</p>
+          <p class="modal-episodes">{{ selectedAnime.episodes }} серий</p>
+        </div>
+      </div>
+
+      <div class="status-options">
+        @for (s of statuses; track s.value) {
+          <button
+            class="status-option"
+            [class.active]="currentStatus === s.value"
+            (click)="selectStatus(s.value)"
+          >
+            <span class="status-dot" [class]="'dot-' + s.value"></span>
+            {{ s.label }}
+          </button>
+        }
+      </div>
+
+      <div class="modal-footer">
+        @if (currentStatus) {
+          <button class="btn-remove" (click)="removeFromList()">Удалить из списка</button>
+        }
+        <button class="btn-save" (click)="saveStatus()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+}

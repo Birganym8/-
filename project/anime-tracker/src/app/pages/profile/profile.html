@@ -51,6 +51,7 @@
       <button class="tab-btn" [class.active]="activeTab === 'list'" (click)="setTab('list')">Список аниме</button>
       <button class="tab-btn" [class.active]="activeTab === 'reviews'" (click)="setTab('reviews')">Отзывы</button>
       <button class="tab-btn" [class.active]="activeTab === 'history'" (click)="setTab('history')">История</button>
+      <button class="tab-btn" [class.active]="activeTab === 'achievements'" (click)="setTab('achievements')">Достижения</button>
     </div>
   </div>
 
@@ -135,6 +136,33 @@
     <div *ngIf="activeTab === 'history'" class="tab-placeholder">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <p>История просмотров появится здесь</p>
+    </div>
+
+        <!-- В .profile-body добавь после ИСТОРИЯ: -->
+    <div *ngIf="activeTab === 'achievements'" class="achievements-section">
+      <div class="achievements-grid">
+        <div class="achievement-card" *ngFor="let ach of achievements" [class.locked]="!ach.unlocked">
+          <div class="ach-icon">
+            <span>{{ ach.icon }}</span>
+            <div class="ach-lock" *ngIf="!ach.unlocked">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="ach-info">
+            <p class="ach-title">{{ ach.title }}</p>
+            <p class="ach-desc">{{ ach.description }}</p>
+            <p class="ach-date" *ngIf="ach.unlocked">{{ ach.date }}</p>
+            <p class="ach-date locked-text" *ngIf="!ach.unlocked">Не разблокировано</p>
+          </div>
+          <div class="ach-badge" *ngIf="ach.unlocked">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#f47521">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
 
     <app-profile-settings

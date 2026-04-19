@@ -65,6 +65,7 @@ class AnimeListCreateAPIView(APIView):
         anime = Anime.objects.all()
         serializer = AnimeSerializer(anime, many=True)
         return Response(serializer.data)
+    
 
     def post(self, request):
         serializer = AnimeSerializer(data=request.data)
@@ -110,11 +111,6 @@ class AnimeDetailAPIView(APIView):
         anime.delete()
         return Response({'message': 'Anime deleted'}, status=status.HTTP_204_NO_CONTENT)
 
-
-        queryset = Anime.objects.all()
-        search = request.query_params.get('search', '')
-        if search:
-            queryset = queryset.filter(title__icontains=search)
 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token

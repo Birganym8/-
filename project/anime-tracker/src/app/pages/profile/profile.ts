@@ -45,12 +45,28 @@ export class ProfileComponent implements OnInit {
     dropped: 0,
   };
 
+  achievements = [
+  { icon: '▶', title: 'Первый шаг', description: 'Посмотрите первый эпизод любого аниме', unlocked: true, date: '12 января 2025' },
+  { icon: '🔥', title: 'На огне', description: 'Посмотрите 10 серий за один день', unlocked: true, date: '18 февраля 2025' },
+  { icon: '📚', title: 'Библиотекарь', description: 'Добавьте 10 аниме в свой список', unlocked: true, date: '3 марта 2025' },
+  { icon: '⭐', title: 'Критик', description: 'Оставьте первый отзыв на аниме', unlocked: false, date: '' },
+  { icon: '🎯', title: 'Марафонец', description: 'Просмотрите аниме полностью за 24 часа', unlocked: false, date: '' },
+  { icon: '👁', title: 'Всевидящий', description: 'Просмотрите 50 различных аниме', unlocked: false, date: '' },
+  { icon: '💎', title: 'Коллекционер', description: 'Добавьте 25 аниме в избранное', unlocked: false, date: '' },
+  { icon: '🌙', title: 'Ночной страж', description: 'Смотрите аниме после полуночи 7 дней подряд', unlocked: false, date: '' },
+  { icon: '🏆', title: 'Легенда', description: 'Просмотрите 100 аниме', unlocked: false, date: '' },
+  { icon: '✨', title: 'Отаку', description: 'Проведите на сайте более 500 часов', unlocked: false, date: '' },
+];
+
   private apiUrl = 'http://127.0.0.1:8000/api/';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>(`${this.apiUrl}user-anime-list/`).subscribe({
+    const token = localStorage.getItem('access_token');
+    const headers = { 'Authorization': `Token ${token}` };
+
+    this.http.get<any[]>(`${this.apiUrl}user-anime-list/`, { headers }).subscribe({
       next: (data) => {
         this.animeList = data;
         this.calcStats();

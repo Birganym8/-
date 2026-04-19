@@ -11,7 +11,7 @@ from .views import (
 urlpatterns = [
     path('genres/', genre_list),
     path('reviews/', review_list_create),
-    path('my-list/', user_anime_list),
+    path('user-anime-list/', user_anime_list),
     path('anime/', AnimeListCreateAPIView.as_view()),
     path('anime/<int:pk>/', AnimeDetailAPIView.as_view()),
     path('register/', views.register_user, name='register'),

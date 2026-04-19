@@ -5,7 +5,7 @@
     <h2 class="section-title">Популярное</h2>
 
     <div class="anime-grid">
-      <div class="anime-card" *ngFor="let anime of allAnimes" [routerLink]="['/anime-detail', anime.id]">
+      <div class="anime-card" *ngFor="let anime of allAnimes" (click)="navigateToAnime(anime.id)">
 
         <div class="card-image-wrapper">
           <img [src]="anime.image_url" [alt]="anime.title">
@@ -13,7 +13,6 @@
         <div class="anime-info">
           <p class="anime-name">{{ anime.title }}</p>
         </div>
-
 
         <div class="hover-popup">
           <img class="hover-popup-image" [src]="anime.image_url" [alt]="anime.title">
@@ -25,9 +24,9 @@
             <p class="hover-popup-meta" *ngIf="!anime.ongoing">Завершено</p>
             <p class="hover-popup-description">{{ anime.description }}</p>
             <div class="hover-popup-actions">
-              <button class="btn-play" title="Смотреть">▶</button>
-              <button title="Закладки">🔖</button>
-              <button title="Добавить">＋</button>
+              <button class="btn-play" title="Смотреть" (click)="$event.stopPropagation()">▶</button>
+              <button title="Закладки" (click)="$event.stopPropagation(); openStatusModal(anime)">🔖</button>
+              <button title="Добавить" (click)="$event.stopPropagation()">＋</button>
             </div>
           </div>
         </div>
@@ -41,3 +40,37 @@
   </div>
 
 </main>
+
+@if (selectedAnime) {
+  <div class="status-overlay" (click)="closeModal($event)">
+    <div class="status-modal">
+      <div class="modal-anime-info">
+        <img [src]="selectedAnime.image_url" class="modal-poster">
+        <div>
+          <p class="modal-title">{{ selectedAnime.title }}</p>
+          <p class="modal-episodes">{{ selectedAnime.episodes }} серий</p>
+        </div>
+      </div>
+
+      <div class="status-options">
+        @for (s of statuses; track s.value) {
+          <button
+            class="status-option"
+            [class.active]="currentStatus === s.value"
+            (click)="selectStatus(s.value)"
+          >
+            <span class="status-dot" [class]="'dot-' + s.value"></span>
+            {{ s.label }}
+          </button>
+        }
+      </div>
+
+      <div class="modal-footer">
+        @if (currentStatus) {
+          <button class="btn-remove" (click)="removeFromList()">Удалить из списка</button>
+        }
+        <button class="btn-save" (click)="saveStatus()">Сохранить</button>
+      </div>
+    </div>
+  </div>
+}

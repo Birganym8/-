@@ -1,27 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
-  private baseUrl = 'http://127.0.0.1:8000/api';
-  // Базовый URL Django
   private url = 'http://127.0.0.1:8000/api';
 
   constructor(private http: HttpClient) {}
 
- 
-
-  // Получить все аниме
-  getAnime(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/anime/`);
+  // Вспомогательная функция для заголовков с токеном
+  private getHeaders() {
+    const token = localStorage.getItem('access_token');
+    return {
+      headers: new HttpHeaders({
+        'Authorization': token ? `Token ${token}` : ''
+      })
+    };
   }
 
   // АВТОРИЗАЦИЯ
-
   login(data: any): Observable<any> {
     return this.http.post(`${this.url}/login/`, data);
   }
@@ -30,39 +29,17 @@ export class ApiService {
     return this.http.post(`${this.url}/register/`, data);
   }
 
-  // ЛИЧНЫЙ СПИСОК (MY LIST)
-
-  // Получить список пользователя
+  // СПИСОК ПОЛЬЗОВАТЕЛЯ (теперь с заголовками!)
   getMyList(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/my-list/`);
+    return this.http.get<any[]>(`${this.url}/my-list/`, this.getHeaders());
   }
 
-  // Добавить аниме в список
-  addToList(data: { anime: number }): Observable<any> {
-    return this.http.post(`${this.url}/my-list/`, data);
+  // АНИМЕ (публичные запросы, заголовки не обязательны, но не помешают)
+  getAnime(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/anime/`);
   }
 
-  // Обновить статус аниме в списке 
-  updateList(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.url}/my-list/${id}/`, data);
-  }
-
-  // Удалить из списка
-  deleteFromList(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/my-list/${id}/`);
-  }
-
-  // Метод для страницы деталей 
   getAnimeById(id: number | string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/anime/${id}/`);
-  }
-
-  // Для добавления отзыва 
-  addReview(animeId: number, reviewData: any): Observable<any> {
-    const payload = {
-      anime: animeId,
-      text: reviewData.text
-    };
-    return this.http.post(`${this.baseUrl}/reviews/`, payload);
+    return this.http.get(`${this.url}/anime/${id}/`);
   }
 }
